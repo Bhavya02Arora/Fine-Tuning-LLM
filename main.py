@@ -1,9 +1,15 @@
 import os
-
-os.environ['OPENAI_API_KEY'] = 'your_openai_api_key_here'
-
+from dotenv import load_dotenv
 from openai import OpenAI
-client = OpenAI()
+
+load_dotenv()
+openai_api_key = os.environ.get("OPENAI_API_KEY")
+# os.environ['OPENAI_API_KEY'] = 'your_openai_api_key_here'
+if openai_api_key is None:
+    raise ValueError("OPENAI_API_KEY environment variable is not set")
+
+
+client = OpenAI(api_key=openai_api_key)
 
 
 response = client.files.create(
